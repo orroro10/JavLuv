@@ -2,6 +2,9 @@
 
 All significant changes are listed in this file.
 
+## [1.2.9] - 2025-2-28
+- Updated all dependent packages
+
 ## [1.2.8] - 2025-2-28
 - Move to folder command no longer requires an existing cover file
 - Fixed issue in movie scapers

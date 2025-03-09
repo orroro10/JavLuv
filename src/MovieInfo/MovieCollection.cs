@@ -694,9 +694,6 @@ namespace MovieInfo
         // Show ID with title
         private bool m_showID;
 
-        // Show user rating with title
-        private bool m_showUserRating;
-
         // Show only unrated movies
         private bool m_showUnratedOnly;
 
