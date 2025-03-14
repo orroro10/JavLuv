@@ -730,7 +730,7 @@ namespace Common
                             "by", "for", "from", "with", 
                             "through", "under", "over",
                             "and", "but", "or", "nor", 
-                            "for", "so", "yet"
+                            "for", "so", "yet", "x"
                         };
                         foreach (string ex in exc)
                         {
