@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.IO;
@@ -698,6 +698,82 @@ namespace Common
                 }
             }
             return title;
+        }
+
+        public static string TitleCapitalize(string originalTitle)
+        {
+            StringBuilder sb = new StringBuilder(originalTitle.Length);
+            string[] words = originalTitle.Split(' ');
+            bool firstOrLastWord = true;
+            for (int j = 0; j < words.Length; ++j)
+            {
+                if (j == words.Length - 1)
+                    firstOrLastWord = true;
+                string word = words[j];
+                bool isAllCaps = true;
+                foreach (char c in word)
+                {
+                    if (Char.IsLower(c))
+                    {
+                        isAllCaps = false;
+                        break;
+                    }
+                }    
+                string w = word;
+                if (isAllCaps == false)
+                {
+                    bool capitalized = false;
+                    if (firstOrLastWord == false)
+                    {
+                        string[] exc = { "a", "an", "the", 
+                            "of", "to", "in", "on", "at", 
+                            "by", "for", "from", "with", 
+                            "through", "under", "over",
+                            "and", "but", "or", "nor", 
+                            "for", "so", "yet"
+                        };
+                        foreach (string ex in exc)
+                        {
+                            if (String.Compare(w, ex, true) == 0)
+                            {
+                                w = ex;
+                                capitalized = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (capitalized == false)
+                    {
+                        for (int i = 0; i < w.Length; ++i)
+                        {
+                            if (Char.IsLetter(w[i]))
+                            {
+                                StringBuilder s = new StringBuilder(w);
+                                s[i] = w[i].ToString().ToUpper()[0];
+                                w = s.ToString();
+                                break;
+                            }
+                        }
+                    }
+
+                    if (w.EndsWith(".") || 
+                        w.EndsWith(":") || 
+                        w.EndsWith("...") ||
+                        w.EndsWith("?") ||
+                        w.EndsWith("!") ||
+                        w.EndsWith("\"") || 
+                        w.EndsWith("…") ||
+                        w.EndsWith("~") ||
+                        w.EndsWith("-"))
+                        firstOrLastWord = true;
+                    else
+                        firstOrLastWord = false;
+                }
+                sb.Append(w.Trim());
+                sb.Append(' ');
+            }
+            return sb.ToString().Trim();
         }
 
         public static void DeleteFile(string fileName)

@@ -2,7 +2,8 @@
 
 All significant changes are listed in this file.
 
-## [1.2.9] - 2025-2-28
+## [1.2.9] - 2025-3-14
+- Add title auto-capitalization
 - Updated all dependent packages
 
 ## [1.2.8] - 2025-2-28
