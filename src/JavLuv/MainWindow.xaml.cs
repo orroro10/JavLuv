@@ -29,7 +29,7 @@ namespace JavLuv
             Settings.Load();
 
             // Load current culture
-            TextManager.SetLanguage(Settings.Get().Language);
+            TextManager.SetLanguage(LanguageType.English);
 
             // Restore previous window state
             WindowState = Settings.Get().MainWindowState;

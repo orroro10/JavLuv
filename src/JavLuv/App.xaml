@@ -12,9 +12,6 @@
                 <!-- The last theme is the default design view -->
                 <ResourceDictionary Source="Themes/Light.xaml" />
                 <ResourceDictionary Source="Themes/Dark.xaml" />
-
-                <!-- Add all localized language text resources here -->
-                <ResourceDictionary Source="Localization/StringResources.jp-JP.xaml" />
                 
                 <!-- Add default English dictionary last, so it's chosen by default in design view -->
                 <ResourceDictionary Source="Localization/StringResources.xaml" />

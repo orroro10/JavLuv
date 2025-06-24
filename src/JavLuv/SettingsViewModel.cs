@@ -3,8 +3,6 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Windows;
 using System.Windows.Input;
-using LanguageTypePair = JavLuv.ObservableStringValuePair<Common.LanguageType>;
-using LanguageTypePairList = System.Collections.ObjectModel.ObservableCollection<JavLuv.ObservableStringValuePair<Common.LanguageType>>;
 using ThemeTypePair = JavLuv.ObservableStringValuePair<JavLuv.ThemeType>;
 using ThemeTypePairList = System.Collections.ObjectModel.ObservableCollection<JavLuv.ObservableStringValuePair<JavLuv.ThemeType>>;
 
@@ -17,18 +15,6 @@ namespace JavLuv
         public SettingsViewModel(MainWindowViewModel parent)
         {
             m_parent = parent;
-            Languages = new LanguageTypePairList();
-            Languages.Add(new LanguageTypePair("Text.English", LanguageType.English));
-            Languages.Add(new LanguageTypePair("Text.Japanese", LanguageType.Japanese));
-            LanguageType currentLanguage = Settings.Get().Language;    
-            foreach (var language in Languages)
-            {
-                if (Settings.Get().Language == language.Value)
-                {
-                    SelectedLanguage = language;
-                    break;
-                }
-            }
             Themes = new ThemeTypePairList();
             Themes.Add(new ThemeTypePair("Text.Dark", ThemeType.Dark));
             Themes.Add(new ThemeTypePair("Text.Light", ThemeType.Light));
@@ -60,30 +46,6 @@ namespace JavLuv
 
         public Settings Data { get { return Settings.Get(); } }
 
-        public LanguageTypePair SelectedLanguage
-        {
-            get
-            {
-                return m_selectedLanguage;
-            }
-            set
-            {
-                if (m_selectedLanguage == null || value.Value != m_selectedLanguage.Value)
-                {
-                    m_selectedLanguage = value;
-                    Settings.Get().Language = m_selectedLanguage.Value;
-                    TextManager.SetLanguage(m_selectedLanguage.Value);
-                    foreach (var languageData in Languages)
-                        languageData.Notify();
-                    if (Parent.SidePanel != null)
-                        Parent.SidePanel.NotifyAllProperty();
-                    NotifyAllPropertiesChanged();
-                    Parent.DisplayTitle();
-               }
-            }
-        }
-
-        public LanguageTypePairList Languages { get; private set; }
 
         public ThemeTypePair SelectedTheme
         {
@@ -639,7 +601,6 @@ namespace JavLuv
         #region Private Members
 
         private MainWindowViewModel m_parent;
-        private LanguageTypePair m_selectedLanguage;
         private ThemeTypePair m_selectedTheme;
 
         #endregion

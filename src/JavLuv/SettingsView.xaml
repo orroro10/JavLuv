@@ -46,15 +46,6 @@
                 <StackPanel Margin="40,10,40,0">
                     <Label Style="{StaticResource PanelLabelStyle}" Content="{DynamicResource Text.General}"/>
 
-                    <Label Content="{DynamicResource Text.Language}"/>
-                    <ComboBox 
-                        HorizontalAlignment="Left"
-                        Width="130"
-                        ItemsSource="{Binding Languages}"
-                        SelectedValue="{Binding SelectedLanguage}"
-                        DisplayMemberPath="Name"
-                        />
-
                     <Label Content="{DynamicResource Text.Theme}"/>
                     <ComboBox 
                         HorizontalAlignment="Left"
