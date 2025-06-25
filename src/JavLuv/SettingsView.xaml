@@ -143,6 +143,11 @@
                         IsChecked="{Binding AutoRestoreMetadata}"
                         Content="{DynamicResource Text.AutoRestoreMetadata}" 
                         />
+                    <CheckBox 
+                        Margin="0, 10, 0, 0" 
+                        IsChecked="{Binding AutoCapitalizeTitle}"
+                        Content="{DynamicResource Text.AutoCapitalizeTitle}" 
+                        />
                     <Label Margin="0, 20, 0, 0" Content="{DynamicResource Text.CoverNames}" />
                     <TextBox
                         Text="{Binding CoverNames}"

@@ -130,6 +130,7 @@ namespace JavLuv
             IsCancelled = false;
             m_hideMetadataAndCovers = Settings.Get().HideMetadataAndCovers;
             m_autoRestoreMetadata = Settings.Get().AutoRestoreMetadata;
+            m_autoCapitalizeTitle = Settings.Get().AutoCapitalizeTitle;
             m_scanRecursively = Settings.Get().ScanRecursively;
             m_autoImportImprovedMovies = Settings.Get().AutoImportImprovedMovies;
             m_language = Settings.Get().Language;
@@ -923,6 +924,10 @@ namespace JavLuv
                     // Clean up metadata
                     MovieUtils.FilterMetadata(metadata, m_studioFilters, m_labelFilters, m_directorFilters, m_genreFilters);
 
+                    // Optionally capitalize the movie title
+                    if (m_autoCapitalizeTitle)
+                        metadata.Title = Utilities.TitleCapitalize(metadata.Title);
+
                     // Check to see if we've successfully downloaded a cover file, and if so, set that value
                     if (String.IsNullOrEmpty(movieData.CoverFileName) && String.IsNullOrEmpty(coverImagePath) == false && File.Exists(coverImagePath))
                         movieData.CoverFileName = Path.GetFileName(coverImagePath);
@@ -1127,6 +1132,7 @@ namespace JavLuv
         private bool m_autoImportImprovedMovies = true;
         private bool m_hideMetadataAndCovers = false;
         private bool m_autoRestoreMetadata = false;
+        private bool m_autoCapitalizeTitle = false;
         private string m_errorLog = String.Empty;
 
         #endregion

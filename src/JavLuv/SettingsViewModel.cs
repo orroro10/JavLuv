@@ -233,6 +233,19 @@ namespace JavLuv
             }
         }
 
+        public bool AutoCapitalizeTitle
+        {
+            get { return Settings.Get().AutoCapitalizeTitle; }
+            set
+            {
+                if (value != Settings.Get().AutoCapitalizeTitle)
+                {
+                    Settings.Get().AutoCapitalizeTitle = value;
+                    NotifyPropertyChanged("AutoCapitalizeTitle");
+                }
+            }
+        }
+
         public string CoverNames
         {
             get { return Settings.Get().CoverNames; }

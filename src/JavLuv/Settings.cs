@@ -159,6 +159,7 @@ namespace JavLuv
         public bool UseMovieFilenameAsTitle { get; set; }
         public bool HideMetadataAndCovers { get; set; }
         public bool AutoRestoreMetadata { get; set; }
+        public bool AutoCapitalizeTitle { get; set; }
         public string SubtitleExts { get; set; }
         public string CoverNames { get; set; }
         public string ThumbnailNames { get; set; }
@@ -348,6 +349,7 @@ namespace JavLuv
             SubtitleExts = "srt; vtt; ssa; ass; smi";
 
             // Some settings should be common, but defaults may differ by language
+            Language = LanguageType.English;
             if (Language == LanguageType.Japanese)
             {
                 CoverNames = "cover; title; poster";

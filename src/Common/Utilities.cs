@@ -710,7 +710,7 @@ namespace Common
                 if (j == words.Length - 1)
                     firstOrLastWord = true;
                 string word = words[j];
-                bool isAllCaps = true;
+                bool isAllCaps = word.Length > 1;
                 foreach (char c in word)
                 {
                     if (Char.IsLower(c))
@@ -726,7 +726,7 @@ namespace Common
                     if (firstOrLastWord == false)
                     {
                         string[] exc = { "a", "an", "the", 
-                            "of", "to", "in", "on", "at", 
+                            "of", "to", "be", "in", "on", "at", 
                             "by", "for", "from", "with", 
                             "through", "under", "over",
                             "and", "but", "or", "nor", 

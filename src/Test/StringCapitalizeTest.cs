@@ -91,6 +91,22 @@ namespace JavLuv
             Assert.Equal("同窓会レズビアンNTR ～恋心を暴走させた絶倫友人に声殺しでイカされ続け夜通し性交でレズ堕ちさせられた婚前巨乳美女～ 小坂ひまり 胡桃さくら", s2);
         }
 
+        [Fact]
+        public void TestCapitalizeTitle11()
+        {
+            String s1 = "A Girl Who Loves to Dominate and A Girl";
+            String s2 = Utilities.TitleCapitalize(s1);
+            Assert.Equal("A Girl Who Loves to Dominate and a Girl", s2);
+        }
+
+        [Fact]
+        public void TestCapitalizeTitle12()
+        {
+            String s1 = "I will be strong";
+            String s2 = Utilities.TitleCapitalize(s1);
+            Assert.Equal("I Will be Strong", s2);
+        }
+
         #endregion
     }
 }
