@@ -26,6 +26,7 @@
     <system:String x:Key="Text.UseFolderName">Use folder name as title</system:String>
     <system:String x:Key="Text.UseMovieFileName">Use movie filename as title</system:String>
     <system:String x:Key="Text.AutoRestoreMetadata">Automatically restore metadata from backup</system:String>
+    <system:String x:Key="Text.AutoCapitalizeTitle">Automatically capitalize movie titles</system:String>
     <system:String x:Key="Text.CoverNames">Cover Names</system:String>
     <system:String x:Key="Text.ThumbnailNames">Thumbnail Names</system:String>
     <system:String x:Key="Text.MovieExclusions">Movie Exclusions</system:String>
@@ -193,6 +194,7 @@
     <system:String x:Key="Text.RescanFiles">Rescan files</system:String>
     <system:String x:Key="Text.FindSubtitles">Find subtitles...</system:String>
     <system:String x:Key="Text.FilterMetadata">Filter metadata</system:String>
+    <system:String x:Key="Text.CapitalizeTitle">Capitalize title</system:String>
     <system:String x:Key="Text.CopyMovieList">Copy movie list</system:String>
     <system:String x:Key="Text.RegenerateMetadata">Regenerate metadata</system:String>
     <system:String x:Key="Text.DeleteMetadata">Delete metadata</system:String>

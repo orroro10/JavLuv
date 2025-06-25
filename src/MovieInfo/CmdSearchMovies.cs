@@ -291,6 +291,11 @@ namespace MovieInfo
                 return retVal;
             if (movie.Path.ContainsCaseless(term))
                 return retVal;
+            foreach (var fn in movie.MovieFileNames)
+            {
+                if (fn.ContainsCaseless(term))
+                    return retVal;
+            }
             return !retVal;
         }
 

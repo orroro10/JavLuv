@@ -492,6 +492,24 @@ namespace JavLuv
 
         #endregion
 
+        #region Capitalize Title Command
+
+        private void CapitalizeTitleExecute()
+        {
+            foreach (var item in SelectedItems)
+                item.MovieData.Metadata.Title = Utilities.TitleCapitalize(item.MovieData.Metadata.Title);
+            Collection_MoviesDisplayedChanged(null, new EventArgs());
+        }
+
+        private bool CanCapitalizeTitleExecute()
+        {
+            return true;
+        }
+
+        public ICommand CapitalizeTitleCommand { get { return new RelayCommand(CapitalizeTitleExecute, CanCapitalizeTitleExecute); } }
+
+        #endregion
+
         #region Copy Movie List Command
 
         private void CopyMovieListExecute()

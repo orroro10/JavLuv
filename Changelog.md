@@ -2,6 +2,12 @@
 
 All significant changes are listed in this file.
 
+## [1.2.9] - 2025-3-14
+- Add title auto-capitalization
+- Updated all dependent packages
+- Removed Japanese language support
+- Movie filenames can now be searched
+
 ## [1.2.8] - 2025-2-28
 - Move to folder command no longer requires an existing cover file
 - Fixed issue in movie scapers
