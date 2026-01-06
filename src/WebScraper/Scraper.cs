@@ -45,21 +45,22 @@ namespace WebScraper
                 DownloadImage(ref coverImagePath, javLibrary.ImageSource);
 
             // Create second scraper module and execute
-            var javDatabaseMetadata = new MovieMetadata();
-            javDatabaseMetadata.UniqueID.Value = movieID;
-            var javDatabase = new MovieJavDatabase(javDatabaseMetadata, m_dispatcher, m_webBrowser, language);
-            javDatabase.Scrape();
-            javDatabaseMetadata = javDatabase.Metadata;
-            if (downloadCoverImage)
-                DownloadImage(ref coverImagePath, javDatabase.ImageSource);
+            // var javDatabaseMetadata = new MovieMetadata();
+            // javDatabaseMetadata.UniqueID.Value = movieID;
+            // var javDatabase = new MovieJavDatabase(javDatabaseMetadata, m_dispatcher, m_webBrowser, language);
+            // javDatabase.Scrape();
+            // javDatabaseMetadata = javDatabase.Metadata;
+            // if (downloadCoverImage)
+            //     DownloadImage(ref coverImagePath, javDatabase.ImageSource);
 
             // Merge the two scrape results, combining them according to which
             // returns the best results from both.
-            mergedMetadata = MergePrimary(javLibraryMetadata, javDatabaseMetadata);           
+            // mergedMetadata = MergePrimary(javLibraryMetadata, javDatabaseMetadata);           
+            mergedMetadata = javLibraryMetadata;           
             
             // Scrape secondary sources if required
-            ScrapeSecondaryMovie(new MovieJavGuru(new MovieMetadata(movieID), m_dispatcher, m_webBrowser, language), mergedMetadata, ref coverImagePath);
-            ScrapeSecondaryMovie(new MovieJavSeenTv(new MovieMetadata(movieID), m_dispatcher, m_webBrowser, language), mergedMetadata, ref coverImagePath);
+            // ScrapeSecondaryMovie(new MovieJavGuru(new MovieMetadata(movieID), m_dispatcher, m_webBrowser, language), mergedMetadata, ref coverImagePath);
+            // ScrapeSecondaryMovie(new MovieJavSeenTv(new MovieMetadata(movieID), m_dispatcher, m_webBrowser, language), mergedMetadata, ref coverImagePath);
 
             // Is this minimally acceptable?
             if (IsMovieMetadataAcceptable(mergedMetadata) == false)
@@ -231,7 +232,10 @@ namespace WebScraper
                 return false;
 
             // Set the appropriate extension
-            string imageFilename = Path.ChangeExtension(imagePath, Path.GetExtension(imageSource));
+            string directory = Path.GetDirectoryName(imagePath);
+            string filename =  Path.GetFileName(imagePath);
+            string extension = Path.GetExtension(imageSource);
+            string imageFilename = directory + "\\" + filename + extension;
 
             bool retVal = false;
 
@@ -258,8 +262,8 @@ namespace WebScraper
                         client.DownloadFile(imageSource, tempFileName);
                         if (IsBannedFile(tempFileName) == false)
                         {
-                            ImageSource newImage = LoadImageFromFile(tempFileName);                   
-                            if (newImage.Width > currentImage.Width && newImage.Height > currentImage.Height)
+                            ImageSource newImage = LoadImageFromFile(tempFileName);
+                            if (newImage.Width > currentImage.Width && newImage.Height > currentImage.Height && !imageSource.EndsWith("webp"))
                             {
                                 Logger.WriteInfo("New image is bigger than old image... Deleting " + imagePath);
                                 File.Delete(imagePath);
