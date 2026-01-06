@@ -162,6 +162,7 @@ namespace JavLuv
                     m_filesInCache = m_movieCollection.GetAllFileNames();
                     foreach (var dir in m_directoriesToScan)
                         ProcessDirectory(dir);
+                    CleanupDeletedFiles();     // This is done after processing directories to keep metadata for movies that were moved.
                     ProcessMetadata();
                     ProcessActors();
                 }
@@ -264,10 +265,11 @@ namespace JavLuv
                     // Check to see if if this movie is already in the cache.  
                     if (String.IsNullOrEmpty(fileInfo.ID) == false && m_movieCollection.MovieExists(fileInfo.ID))
                     {
-                        // Is this path the same as the existing movie?  If so, we can just skip it.
+                        // Is this path and filename the same as the existing movie?  If so, we can just skip it.
                         MovieData movieData = m_movieCollection.GetMovie(fileInfo.ID);
                         string path = Path.GetDirectoryName(fn);
-                        if (String.Equals(path, movieData.Path, StringComparison.OrdinalIgnoreCase))
+                        if (String.Equals(path, movieData.Path, StringComparison.OrdinalIgnoreCase) &&
+                                movieData.MovieFileNames.Contains(fileInfo.FileName))
                             continue;
                         
                         // Does the movie actually exist?  The user may have moved it manually and not informed JavLuv.
@@ -469,6 +471,7 @@ namespace JavLuv
 
         private void AddFileToMovieData(MovieData movieData, FileInfo fileInfo)
         {
+            Logger.WriteInfo(String.Format("Adding file {0} to movie ID {1}", fileInfo.FileName, movieData.Metadata.UniqueID.Value));
             if (fileInfo.FileType == FileType.Movie)
             {
                 if (fileInfo.MovieType == MovieType.Feature)
@@ -523,6 +526,40 @@ namespace JavLuv
                 currentID = fileInfo.ID;
             }
             return false;
+        }
+
+        private void CleanupDeletedFiles()
+        {
+            foreach (string cachedFile in m_filesInCache)
+            {
+                if (IsCancelled || m_dispatcher.HasShutdownStarted)
+                    return;
+
+                // Check to see if the file still exists
+                if (File.Exists(cachedFile) == false)
+                {
+                    Logger.WriteInfo(String.Format("Cached file no longer exists: {0}", cachedFile));
+
+                    // Find the movie that owns this file
+                    string filename = Path.GetFileName(cachedFile);
+                    string movieId = Utilities.ParseMovieID(filename);
+                    MovieData movieData = m_movieCollection.GetMovie(movieId);
+                    if (movieData == null)
+                    {
+                        Logger.WriteWarning(String.Format("Unable to find movie data for ID {0} when cleaning up deleted files", movieId));
+                        continue;
+                    }
+
+                    // Remove file from MovieData
+                    movieData.MovieFileNames.Remove(filename);
+                    // If there are no more files in for this movie, remove it from the collection
+                    if (movieData.MovieFileNames.Count == 0)
+                    {
+                        Logger.WriteInfo(String.Format("Removing movie {0} since file {1} no longer exists", movieData.Metadata.UniqueID.Value, cachedFile));
+                        m_movieCollection.RemoveMovie(movieData);
+                    }
+                }
+            }
         }
 
         private void ProcessMetadata()
