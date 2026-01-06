@@ -100,10 +100,11 @@ namespace Common
             Regex regex = null;
             MatchCollection matches = null;
             int count = 0;
+            string fileNameNoExt = Path.GetFileNameWithoutExtension(fileName);
             foreach (string check in checks)
             {
                 regex = new Regex(check);
-                matches = regex.Matches(fileName);
+                matches = regex.Matches(fileNameNoExt);
                 if (matches.Count != 0)
                     break;
                 count++;
