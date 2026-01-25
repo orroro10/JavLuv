@@ -64,7 +64,7 @@ namespace WebScraper
                         if (childElement != null)
                         {
                             m_metadata.Title = childElement.TextContent;
-                            string id = Utilities.ParseMovieID(m_metadata.Title);
+                            string id = Utilities.ParseMovieID(m_metadata.Title.Split(' ')[0]);
                             if (String.IsNullOrEmpty(id) == false)
                             {
                                 int len = m_metadata.Title.Length - id.Length - 1;
