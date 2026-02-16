@@ -141,8 +141,9 @@
     <system:String x:Key="Text.MovingMoviesMessage">Moving movies to new location:</system:String>
     <system:String x:Key="Text.MovingRenamingMoviesTitle">Moving / Renaming Movies</system:String>
     <system:String x:Key="Text.MovingRenamingMoviesMessage">Moving / renaming movies and related files / folders:</system:String>
-    <system:String x:Key="Text.ConfirmDeleteMoviesTitle">Delete Selected Movies?</system:String>
+    <system:String x:Key="Text.ConfirmDeleteMoviesTitle">Delete Selected Movie(s)?</system:String>
     <system:String x:Key="Text.ConfirmDeleteMoviesMessage">JavLuv will delete all selected movies and associated files.  \nThis action cannot be undone.  Proceed?</system:String>
+    <system:String x:Key="Text.ConfirmDeleteOneMovieMessage">JavLuv will delete {0} and its associated files.  \nThis action cannot be undone.  Proceed?</system:String>
     <system:String x:Key="Text.DeletingMoviesTitle">Deleting Movies</system:String>
     <system:String x:Key="Text.DeletingMoviesMessage">Deleting movies and associated files:</system:String>
     <system:String x:Key="Text.AndMore">and {0} more...</system:String>

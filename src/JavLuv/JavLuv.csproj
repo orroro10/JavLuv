@@ -341,6 +341,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\folder.png" />
+    <Resource Include="Resources\delete.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="JavLuv.ico" />

@@ -1,6 +1,7 @@
 ﻿using Common;
 using MovieInfo;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -578,6 +579,44 @@ namespace JavLuv
         }
 
         public ICommand OpenFolderCommand { get { return new RelayCommand(OpenFolderExecute, CanOpenFolderExecute); } }
+
+
+        private void DeleteMovieExecute()
+        {
+            var msgRes = MessageBox.Show(string.Format(TextManager.GetString("Text.ConfirmDeleteOneMovieMessage"), m_movieData.Metadata.UniqueID.Value),
+                TextManager.GetString("Text.ConfirmDeleteMoviesTitle"),
+                MessageBoxButton.YesNo);
+            if (msgRes == MessageBoxResult.No)
+                return;
+
+            // Delete current movie
+            List<MovieData> moviesToDelete = new List<MovieData>();
+            moviesToDelete.Add(m_movieData);
+
+            // Create progress window to display modally as movies are deleted
+            var progress = new ProgressWindow();
+            progress.Owner = App.Current.MainWindow;
+            progress.Title = TextManager.GetString("Text.DeletingMoviesTitle");
+            progress.Message = TextManager.GetString("Text.DeletingMoviesMessage");
+            progress.TotalActions = moviesToDelete.Count;
+            progress.UpdateProgress();
+
+            // Move folders as a background task
+            CommandQueue.Command().Execute(new CmdDeleteMovies(progress, moviesToDelete, Parent.Parent.Collection));
+
+            // Show progress dialog
+            progress.ShowDialog();
+
+            // Save collection, which will update folder status
+            Parent.Parent.Collection.Save();
+        }
+
+        private bool CanDeleteMovieExecute()
+        {
+            return Parent.Parent.IsScanning == false && Parent.Parent.IsReadOnlyMode == false;
+        }
+
+        public ICommand DeleteMovieCommand { get { return new RelayCommand(DeleteMovieExecute, CanDeleteMovieExecute); } }
 
         #endregion
 
